@@ -14,25 +14,32 @@ int main(void)
 {   
     printf("Welcome to Enc-Encryption and Decryption tool.\n");
     printf("\n");
-    int operation= askOperation();
-    char message[100];
-
-    if (operation=='E')
-    {   
-        printf("\n");
-        printf("Enter the message you want to Encrypt(Max 100 charcters): ");
-        getMessage(message);
-        printf("\n");
-        encrypt(message, generateRandomKey());
-    }
-    else if (operation=='D') 
+    while (1) 
     {
-        printf("\n");
-        printf("Enter the Encrypted message: ");
-        getMessage(message);
-        decrypt(message);
-    }   
-    
+        int operation= askOperation();
+        char message[100];
+        if ( operation == 'Q')
+        {
+            printf("Procceding to exit...");
+            break;
+        }
+        else if (operation=='E')
+        {   
+            printf("\n");
+            printf("Enter the message you want to Encrypt(Max 100 charcters): ");
+            getMessage(message);
+            printf("\n");
+            encrypt(message, generateRandomKey());
+        }
+        else if (operation=='D') 
+        {
+            printf("\n");
+            printf("Enter the Encrypted message: ");
+            getMessage(message);
+            decrypt(message);
+        }   
+    }
+        printf("The program ended. Have a nice day. :)\n");
     return 0; 
 }
 
@@ -40,7 +47,9 @@ int generateRandomKey(void)
 {
     int random=0;
     srand((unsigned int)time(NULL));
+    while (random<999){
     random = rand()%10001;
+    }
     printf("Here your Encryption Key: %i ", random);
     printf("***DO NOT FORGET THİS NUMBER***\n");
     return random;
@@ -50,12 +59,13 @@ int askOperation(void)
 {
     char x;
     while (1)
-    {
-        printf("Choose the operation: (E)ncryption or (D)ecryption: ");
+    {   
+        printf("Press Q to exit or \n");
+        printf("Choose an operation: (E)ncryption or (D)ecryption:   ");
         if (scanf("%c", &x) == 1)
         {
             x= toupper(x);
-            if (x == 'E' || x == 'D')
+            if (x == 'E' || x == 'D'|| x == 'Q')
             {
                 // Consume any remaining characters in the input buffer, including newline
                 int c;
@@ -110,7 +120,7 @@ void decrypt(char *message)
     int decryptionKey;
     while (1)
     {
-        printf("Enter the Encryption key (0 to 10000): ");
+        printf("Enter the Encryption key: ");
         if (scanf("%i", &decryptionKey) == 1 && decryptionKey >= 0 && decryptionKey <= 10000)
         {
             int c;
@@ -134,4 +144,3 @@ void decrypt(char *message)
     }
     printf("\n");
 }
-
